@@ -5,7 +5,7 @@ var cors = require('cors');
 
 connectToMongo()
 const app = express()
-const port = 5000
+const port = process.env.PORT || 5000
 
 app.use(cors());
 app.use(express.json())// for using req.body we have to use a middleware
@@ -18,6 +18,6 @@ app.use("/api/notes",require('./routes/notes'))
 //   res.send('Hello chinu!')
 // })
 
-app.listen(port, () => {
+app.listen(port,'0.0.0.0',  () => {
   console.log(`iNotebook backend listening at http://localhost:${port}`)
 })
