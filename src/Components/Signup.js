@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Signup = (props) => {
-    const host = "http://localhost:5000";
+    const host = process.env.REACT_APP_API_URL;
     const [credential, setCredential] = useState({ name: "", email: "", password: "", cpassword: "" });
     let Navigate = useNavigate();// useHistory has been changed to useNavigate
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { name, email, password } = credential;
+        const { name, email, password, cpassword } = credential;
+        if (password !== cpassword) {
+            props.showAlert("Passwords do not match", "danger");
+            return;
+        }
         const response = await fetch(`${host}/api/auth/createuser`, {
             method: 'POST',
             headers: {
